@@ -13,7 +13,7 @@ header {
     padding: 20px;
     text-align: center;
     border-bottom: 1px solid #3a3a3a;
-    position: sticky; /* Sticks to top when scrolling */
+    position: sticky;
     top: 0;
     z-index: 10;
 }
@@ -27,18 +27,20 @@ header h1 {
 }
 
 header h1:hover {
-    transform: scale(1.05); /* Slight bounce on hover */
+    transform: scale(1.05);
 }
 
 nav ul {
     list-style: none;
     padding: 10px 0;
     margin: 0;
+    display: flex;
+    flex-wrap: wrap; /* Wraps nav items on small screens */
+    justify-content: center;
 }
 
 nav ul li {
-    display: inline;
-    margin: 0 20px;
+    margin: 5px 15px; /* Reduced margin for mobile */
 }
 
 nav ul li a {
@@ -53,29 +55,30 @@ nav ul li a:hover {
     color: #fff;
     background-color: #3a3a3a;
     border-radius: 5px;
-    transform: translateY(-2px); /* Lift effect */
+    transform: translateY(-2px);
 }
 
-/* Main - interactive sections */
+/* Main - smooth and responsive */
 main {
     max-width: 900px;
+    width: 90%; /* Scales down on mobile */
     margin: 30px auto 80px;
-    padding: 0 20px;
+    padding: 0 10px; /* Smaller padding on mobile */
 }
 
 section {
     background-color: #1f1f1f;
-    padding: 25px;
+    padding: 20px;
     margin-bottom: 20px;
     border-radius: 10px;
     border: 1px solid #3a3a3a;
-    cursor: pointer; /* Signals it’s interactive */
+    cursor: pointer;
     transition: all 0.3s ease;
 }
 
 section:hover {
-    transform: translateY(-5px); /* Lift on hover */
-    border-color: #00b4d8; /* Subtle cyan edge */
+    transform: translateY(-5px);
+    border-color: #00b4d8;
     box-shadow: 0 5px 15px rgba(0, 180, 216, 0.2);
 }
 
@@ -87,7 +90,7 @@ h2 {
 }
 
 section:hover h2 {
-    color: #00b4d8; /* Cyan pop on hover */
+    color: #00b4d8;
 }
 
 p {
@@ -99,22 +102,9 @@ p {
 }
 
 section:hover p {
-    opacity: 1; /* Text sharpens on hover */
+    opacity: 1;
 }
 
-/* Footer - subtle interaction */
-footer {
-    text-align: center;
-    padding: 15px;
-    background-color: #1f1f1f;
-    color: #b0b0b0;
-    border-top: 1px solid #3a3a3a;
-    transition: color 0.3s ease;
-}
-
-footer:hover {
-    color: #fff; /* Brightens on hover */
-}
 /* Button styling */
 .action-btn {
     background-color: #00b4d8;
@@ -125,6 +115,7 @@ footer:hover {
     font-size: 16px;
     cursor: pointer;
     transition: all 0.3s ease;
+    margin: 5px 0; /* Space on mobile */
 }
 
 .action-btn:hover {
@@ -132,7 +123,9 @@ footer:hover {
     color: #121212;
     transform: scale(1.05);
 }
-.chat-box {
+
+/* Chat, hangout, and update lists */
+.chat-box, .hangout-list, .update-list {
     background-color: #2a2a2a;
     padding: 15px;
     border-radius: 5px;
@@ -141,78 +134,71 @@ footer:hover {
     margin-bottom: 15px;
 }
 
-#chat-input {
-    background-color: #2a2a2a;
-    border: 1px solid #3a3a3a;
-    color: #e0e0e0;
-    padding: 10px;
-    width: 70%;
-    border-radius: 5px;
-    margin-right: 10px;
-}
-
-#send-btn {
-    background-color: #00b4d8;
-    color: #fff;
-}
-.update-list {
+.hangout-list, .update-list {
     list-style: none;
     padding: 0;
 }
 
-.update-list li {
-    background-color: #2a2a2a;
+.hangout-list li, .update-list li {
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 5px;
-}
-.hangout-list {
-    list-style: none;
-    padding: 0;
 }
 
-.hangout-list li {
-    background-color: #2a2a2a;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-}
-#username, #password {
+/* Inputs and selects */
+#chat-input, #hangout-input, #username, #password, #chat-user {
     display: block;
-    width: 200px;
+    width: 100%; /* Full width on mobile */
+    max-width: 300px; /* Cap for larger screens */
     margin: 10px auto;
     padding: 10px;
     background-color: #2a2a2a;
     border: 1px solid #3a3a3a;
     color: #e0e0e0;
     border-radius: 5px;
+    box-sizing: border-box; /* Includes padding in width */
 }
 
-#message {
-    text-align: center;
-    color: #00b4d8;
-}
-#username, #password {
-    display: block;
-    width: 200px;
-    margin: 10px auto;
-    padding: 10px;
-    background-color: #2a2a2a;
-    border: 1px solid #3a3a3a;
-    color: #e0e0e0;
-    border-radius: 5px;
-}
-
+/* Login message */
 #message {
     text-align: center;
     color: #00b4d8;
     margin-top: 10px;
 }
-#chat-user {
-    background-color: #2a2a2a;
-    border: 1px solid #3a3a3a;
-    color: #e0e0e0;
-    padding: 10px;
-    border-radius: 5px;
-    margin-right: 10px;
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 15px;
+    background-color: #1f1f1f;
+    color: #b0b0b0;
+    border-top: 1px solid #3a3a3a;
+    transition: color 0.3s ease;
+}
+
+footer:hover {
+    color: #fff;
+}
+
+/* Media query for mobile */
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 28px; /* Smaller title */
+    }
+    nav ul li {
+        margin: 5px 10px; /* Tighter spacing */
+    }
+    nav ul li a {
+        font-size: 16px; /* Smaller links */
+    }
+    h2 {
+        font-size: 22px; /* Smaller headings */
+    }
+    p {
+        font-size: 14px; /* Smaller text */
+    }
+    .action-btn {
+        padding: 8px 15px; /* Smaller buttons */
+        font-size: 14px;
+    }
 }
