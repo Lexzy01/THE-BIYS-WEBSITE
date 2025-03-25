@@ -1,91 +1,82 @@
-// Load users from localStorage or use default
-let users = JSON.parse(localStorage.getItem('users')) || {
-    'Lexzy': 'password1',
-    'Pely': 'password2',
-    'Icezee': 'password3',
-    'Praise': 'password4',
-    'Hated Vylan': 'password5'
-};
+// Firebase setup
+const auth = firebase.auth();
+const db = firebase.firestore();
 
-// Load chat messages from localStorage or start empty
-let chatMessages = JSON.parse(localStorage.getItem('chatMessages')) || [];
+// Check login state
+auth.onAuthStateChanged(user => {
+    if (!user && window.location.pathname !== '/index.html') {
+        window.location.href = 'index.html'; // Redirect to login if not logged in
+    }
+});
 
-// On page load, display chat messages (for chat.html)
-const chatBox = document.getElementById('chat-box');
-if (chatBox) {
-    chatMessages.forEach(msg => {
-        chatBox.innerHTML += `<p><strong>${msg.user}:</strong> ${msg.text}</p>`;
-    });
-    chatBox.scrollTop = chatBox.scrollHeight; // Scroll to bottom
-}
-
-// Grab all buttons with class 'action-btn'
+// Grab buttons
 const buttons = document.querySelectorAll('.action-btn');
 console.log('Buttons found:', buttons.length);
 
-// Handle all buttons across pages
 buttons.forEach(button => {
     button.addEventListener('click', () => {
-        // Homepage buttons (home.html)
-        if (button.textContent === 'Say Yo') {
-            alert('Yo, it’s The Boys!');
-        } else if (button.textContent === 'Crew Vibes') {
-            alert('Best crew, best vibes.');
-        } else if (button.textContent === 'Boys Only') {
-            alert('The Boys rule this spot!');
-        }
-        // Chat page (chat.html)
+        // Home buttons (home.html)
+        if (button.textContent === 'Say Yo') alert('Yo, it’s The Boys!');
+        else if (button.textContent === 'Crew Vibes') alert('Best crew, best vibes.');
+        else if (button.textContent === 'Boys Only') alert('The Boys rule this spot!');
+
+        // Chat (chat.html)
         else if (button.id === 'send-btn') {
             const input = document.getElementById('chat-input');
-            const userSelect = document.getElementById('chat-user');
-            const chatBox = document.getElementById('chat-box');
-            if (input && userSelect && chatBox && input.value) {
-                const message = { user: userSelect.value, text: input.value };
-                chatMessages.push(message); // Add to array
-                localStorage.setItem('chatMessages', JSON.stringify(chatMessages)); // Save to localStorage
-                chatBox.innerHTML += `<p><strong>${message.user}:</strong> ${message.text}</p>`;
-                input.value = '';
-                chatBox.scrollTop = chatBox.scrollHeight;
-            }
-        }
-        // Hangouts page (hangouts.html)
-        else if (button.id === 'add-hangout') {
-            const input = document.getElementById('hangout-input');
-            const hangoutList = document.querySelector('.hangout-list');
-            if (input && hangoutList && input.value) {
-                hangoutList.innerHTML += `<li><strong>Lexzy:</strong> ${input.value}</li>`;
+            if (input && input.value) {
+                const user = auth.currentUser;
+                db.collection('messages').add({
+                    user: user.email.split('@')[0], // Username from email
+                    text: input.value,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                });
                 input.value = '';
             }
         }
-        // Login page (index.html)
+
+        // Login (index.html)
         else if (button.id === 'login-btn') {
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
-            if (users[username] && users[username] === password) {
-                document.getElementById('message').textContent = 'Logged in! Heading to The Boys...';
-                setTimeout(() => { window.location.href = 'home.html'; }, 1000);
-            } else {
-                document.getElementById('message').textContent = 'Wrong username or password.';
-            }
+            auth.signInWithEmailAndPassword(`${username}@theboys.com`, password)
+                .then(() => {
+                    document.getElementById('message').textContent = 'Logged in! Heading to The Boys...';
+                    setTimeout(() => { window.location.href = 'home.html'; }, 1000);
+                })
+                .catch(err => document.getElementById('message').textContent = err.message);
         }
         else if (button.id === 'signup-btn') {
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
-            if (username && password && !users[username]) {
-                users[username] = password;
-                localStorage.setItem('users', JSON.stringify(users));
-                document.getElementById('message').textContent = 'Signed up! Now login.';
-            } else {
-                document.getElementById('message').textContent = 'Username taken or fields empty.';
-            }
+            auth.createUserWithEmailAndPassword(`${username}@theboys.com`, password)
+                .then(() => {
+                    document.getElementById('message').textContent = 'Signed up! Now login.';
+                })
+                .catch(err => document.getElementById('message').textContent = err.message);
         }
     });
 });
 
-// Logout for all pages except login
+// Live chat updates with timestamps
+if (document.getElementById('chat-box')) {
+    db.collection('messages')
+        .orderBy('timestamp')
+        .onSnapshot(snapshot => {
+            const chatBox = document.getElementById('chat-box');
+            chatBox.innerHTML = '';
+            snapshot.forEach(doc => {
+                const msg = doc.data();
+                const time = msg.timestamp ? new Date(msg.timestamp.toDate()).toLocaleTimeString() : 'Just now';
+                chatBox.innerHTML += `<p><strong>${msg.user}:</strong> ${msg.text} <small>(${time})</small></p>`;
+            });
+            chatBox.scrollTop = chatBox.scrollHeight;
+        });
+}
+
+// Logout
 const logout = document.getElementById('logout');
 if (logout) {
     logout.addEventListener('click', () => {
-        window.location.href = 'index.html';
+        auth.signOut().then(() => window.location.href = 'index.html');
     });
 }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Boys - Hangouts</title>
+    <title>The Boys - Chat</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -23,18 +23,30 @@
     </header>
     <main>
         <section>
-            <h2>Our Hangouts</h2>
-            <p>Where The Boys kick it—past spots and next moves.</p>
-            <ul class="hangout-list">
-                <li><strong>Last Week:</strong> Downtown spot—burgers and vibes.</li>
-                <li><strong>Yesterday:</strong> Icezee’s place—gaming marathon.</li>
-                <li><strong>Soon:</strong> Park kickabout—bring the ball.</li>
-            </ul>
+            <h2>Chat with The Boys</h2>
+            <div class="chat-box" id="chat-box"></div>
+            <input type="text" id="chat-input" placeholder="Drop a message...">
+            <button class="action-btn" id="send-btn">Send</button>
         </section>
     </main>
     <footer>
         <p>© 2025 The Boys - Our Private Spot</p>
     </footer>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+        firebase.initializeApp(firebaseConfig);
+    </script>
     <script src="script.js"></script>
 </body>
 </html>
