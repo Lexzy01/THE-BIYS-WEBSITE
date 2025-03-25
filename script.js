@@ -1,3 +1,12 @@
+// Load users from localStorage or use default if none exist
+let users = JSON.parse(localStorage.getItem('users')) || {
+    'Lexzy': 'password1',
+    'Pely': 'password2',
+    'Icezee': 'password3',
+    'Praise': 'password4',
+    'Hated Vylan': 'password5'
+};
+
 // Grab all buttons with class 'action-btn'
 const buttons = document.querySelectorAll('.action-btn');
 console.log('Buttons found:', buttons.length);
@@ -48,6 +57,7 @@ buttons.forEach(button => {
             const password = document.getElementById('password').value;
             if (username && password && !users[username]) {
                 users[username] = password;
+                localStorage.setItem('users', JSON.stringify(users)); // Save to localStorage
                 document.getElementById('message').textContent = 'Signed up! Now login.';
             } else {
                 document.getElementById('message').textContent = 'Username taken or fields empty.';
@@ -55,15 +65,6 @@ buttons.forEach(button => {
         }
     });
 });
-
-// Fake user database (hardcoded)
-const users = {
-    'Lexzy': 'password1',
-    'Pely': 'password2',
-    'Icezee': 'password3',
-    'Praise': 'password4',
-    'Hated Vylan': 'password5'
-};
 
 // Logout for all pages except login
 const logout = document.getElementById('logout');
