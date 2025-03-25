@@ -2,10 +2,10 @@
 const buttons = document.querySelectorAll('.action-btn');
 console.log('Buttons found:', buttons.length);
 
-// Handle homepage, chat, and hangouts buttons
+// Handle all buttons across pages
 buttons.forEach(button => {
     button.addEventListener('click', () => {
-        // Homepage (index.html)
+        // Homepage buttons (home.html)
         if (button.textContent === 'Say Yo') {
             alert('Yo, it’s The Boys!');
         } else if (button.textContent === 'Crew Vibes') {
@@ -32,13 +32,13 @@ buttons.forEach(button => {
                 input.value = '';
             }
         }
-        // Login page (login.html)
+        // Login page (index.html)
         else if (button.id === 'login-btn') {
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
             if (users[username] && users[username] === password) {
                 document.getElementById('message').textContent = 'Logged in! Heading to The Boys...';
-                setTimeout(() => { window.location.href = 'index.html'; }, 1000);
+                setTimeout(() => { window.location.href = 'home.html'; }, 1000);
             } else {
                 document.getElementById('message').textContent = 'Wrong username or password.';
             }
@@ -65,10 +65,10 @@ const users = {
     'Hated Vylan': 'password5'
 };
 
-// Logout for all pages
+// Logout for all pages except login
 const logout = document.getElementById('logout');
 if (logout) {
     logout.addEventListener('click', () => {
-        window.location.href = 'login.html';
+        window.location.href = 'index.html';
     });
 }
