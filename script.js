@@ -1,4 +1,4 @@
-// Load users from localStorage or use default if none exist
+// Load users from localStorage or use default
 let users = JSON.parse(localStorage.getItem('users')) || {
     'Lexzy': 'password1',
     'Pely': 'password2',
@@ -6,6 +6,18 @@ let users = JSON.parse(localStorage.getItem('users')) || {
     'Praise': 'password4',
     'Hated Vylan': 'password5'
 };
+
+// Load chat messages from localStorage or start empty
+let chatMessages = JSON.parse(localStorage.getItem('chatMessages')) || [];
+
+// On page load, display chat messages (for chat.html)
+const chatBox = document.getElementById('chat-box');
+if (chatBox) {
+    chatMessages.forEach(msg => {
+        chatBox.innerHTML += `<p><strong>${msg.user}:</strong> ${msg.text}</p>`;
+    });
+    chatBox.scrollTop = chatBox.scrollHeight; // Scroll to bottom
+}
 
 // Grab all buttons with class 'action-btn'
 const buttons = document.querySelectorAll('.action-btn');
@@ -25,9 +37,13 @@ buttons.forEach(button => {
         // Chat page (chat.html)
         else if (button.id === 'send-btn') {
             const input = document.getElementById('chat-input');
-            const chatBox = document.querySelector('.chat-box');
-            if (input && chatBox && input.value) {
-                chatBox.innerHTML += `<p><strong>Lexzy:</strong> ${input.value}</p>`;
+            const userSelect = document.getElementById('chat-user');
+            const chatBox = document.getElementById('chat-box');
+            if (input && userSelect && chatBox && input.value) {
+                const message = { user: userSelect.value, text: input.value };
+                chatMessages.push(message); // Add to array
+                localStorage.setItem('chatMessages', JSON.stringify(chatMessages)); // Save to localStorage
+                chatBox.innerHTML += `<p><strong>${message.user}:</strong> ${message.text}</p>`;
                 input.value = '';
                 chatBox.scrollTop = chatBox.scrollHeight;
             }
@@ -57,7 +73,7 @@ buttons.forEach(button => {
             const password = document.getElementById('password').value;
             if (username && password && !users[username]) {
                 users[username] = password;
-                localStorage.setItem('users', JSON.stringify(users)); // Save to localStorage
+                localStorage.setItem('users', JSON.stringify(users));
                 document.getElementById('message').textContent = 'Signed up! Now login.';
             } else {
                 document.getElementById('message').textContent = 'Username taken or fields empty.';

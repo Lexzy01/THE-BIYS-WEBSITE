@@ -20,15 +20,18 @@
                 <li><a href="#" id="logout">Logout</a></li>
             </ul>
         </nav>
-        </nav>
     </header>
     <main>
         <section>
             <h2>Chat with The Boys</h2>
-            <div class="chat-box">
-                <p><strong>Lexzy:</strong> Yo, what’s the plan tonight?</p>
-                <p><strong>Pely:</strong> Chill spot downtown, you in?</p>
-            </div>
+            <div class="chat-box" id="chat-box"></div>
+            <select id="chat-user">
+                <option value="Lexzy">Lexzy</option>
+                <option value="Pely">Pely</option>
+                <option value="Icezee">Icezee</option>
+                <option value="Praise">Praise</option>
+                <option value="Hated Vylan">Hated Vylan</option>
+            </select>
             <input type="text" id="chat-input" placeholder="Drop a message...">
             <button class="action-btn" id="send-btn">Send</button>
         </section>
