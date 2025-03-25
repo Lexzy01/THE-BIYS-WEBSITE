@@ -6,6 +6,7 @@
     <title>The Boys - Updates</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
     <header>
@@ -17,14 +18,18 @@
                 <li><a href="updates.html">Updates</a></li>
                 <li><a href="hangouts.html">Hangouts</a></li>
                 <li><a href="chat.html">Chat</a></li>
+                <li><a href="profile.html">Profile</a></li>
                 <li><a href="#" id="logout">Logout</a></li>
+                <li><button class="action-btn" id="theme-toggle">Toggle Theme</button></li>
             </ul>
         </nav>
     </header>
     <main>
         <section>
             <h2>Updates</h2>
-            <p>Nothing new yet—check back later!</p>
+            <div class="updates-box" id="updates-box"></div>
+            <input type="text" id="update-input" placeholder="Post an update...">
+            <button class="action-btn" id="post-update-btn">Post Update</button>
         </section>
     </main>
     <footer>

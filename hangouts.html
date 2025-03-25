@@ -6,6 +6,7 @@
     <title>The Boys - Hangouts</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
     <header>
@@ -17,14 +18,21 @@
                 <li><a href="updates.html">Updates</a></li>
                 <li><a href="hangouts.html">Hangouts</a></li>
                 <li><a href="chat.html">Chat</a></li>
+                <li><a href="profile.html">Profile</a></li>
                 <li><a href="#" id="logout">Logout</a></li>
+                <li><button class="action-btn" id="theme-toggle">Toggle Theme</button></li>
             </ul>
         </nav>
     </header>
     <main>
         <section>
+            <p id="user-display"></p>
             <h2>Hangouts</h2>
-            <p>No plans yet—let’s set something up!</p>
+            <div class="hangouts-box" id="hangouts-box"></div>
+            <input type="text" id="hangout-date" placeholder="Date (e.g., 2025-04-01)">
+            <input type="text" id="hangout-location" placeholder="Location (e.g., Downtown)">
+            <input type="text" id="hangout-activity" placeholder="Activity (e.g., Game Night)">
+            <button class="action-btn" id="plan-hangout-btn">Plan Hangout</button>
         </section>
     </main>
     <footer>

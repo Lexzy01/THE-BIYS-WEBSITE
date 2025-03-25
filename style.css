@@ -1,10 +1,90 @@
-/* Base setup - cool and dark */
+/* Base setup - dark mode (default) */
 body {
     margin: 0;
     padding: 0;
     font-family: 'Montserrat', sans-serif;
     background-color: #121212;
     color: #e0e0e0;
+    transition: all 0.3s ease;
+}
+
+/* Light mode */
+body.light-mode {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+body.light-mode header {
+    background-color: #e0e0e0;
+    border-bottom: 1px solid #ccc;
+}
+
+body.light-mode header h1 {
+    color: #333;
+}
+
+body.light-mode nav ul li a {
+    color: #666;
+}
+
+body.light-mode nav ul li a:hover {
+    color: #333;
+    background-color: #d0d0d0;
+}
+
+body.light-mode section {
+    background-color: #fff;
+    border: 1px solid #ccc;
+}
+
+body.light-mode section:hover {
+    border-color: #00b4d8;
+}
+
+body.light-mode h2, body.light-mode h3 {
+    color: #333;
+}
+
+body.light-mode section:hover h2 {
+    color: #00b4d8;
+}
+
+body.light-mode p {
+    color: #555;
+}
+
+body.light-mode .action-btn {
+    background-color: #00b4d8;
+    color: #fff;
+}
+
+body.light-mode .action-btn:hover {
+    background-color: #333;
+    color: #fff;
+}
+
+body.light-mode .chat-box, body.light-mode .updates-box, body.light-mode .hangouts-box {
+    background-color: #e8e8e8;
+}
+
+body.light-mode .chat-box small, body.light-mode .updates-box small, body.light-mode .hangouts-box small {
+    color: #777;
+}
+
+body.light-mode #chat-input, body.light-mode #update-input, body.light-mode #hangout-date, body.light-mode #hangout-location, body.light-mode #hangout-activity, body.light-mode #username, body.light-mode #password, body.light-mode #new-password {
+    background-color: #e8e8e8;
+    border: 1px solid #ccc;
+    color: #333;
+}
+
+body.light-mode footer {
+    background-color: #e0e0e0;
+    color: #666;
+    border-top: 1px solid #ccc;
+}
+
+body.light-mode footer:hover {
+    color: #333;
 }
 
 /* Header - interactive nav */
@@ -89,6 +169,12 @@ h2 {
     transition: color 0.3s ease;
 }
 
+h3 {
+    color: #fff;
+    font-size: 20px;
+    margin-top: 20px;
+}
+
 section:hover h2 {
     color: #00b4d8;
 }
@@ -103,6 +189,26 @@ p {
 
 section:hover p {
     opacity: 1;
+}
+
+/* Last Seen */
+.last-seen {
+    background-color: #2a2a2a;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.last-seen p {
+    margin: 5px 0;
+}
+
+body.light-mode .last-seen {
+    background-color: #e8e8e8;
+}
+
+body.light-mode .last-seen p {
+    color: #555;
 }
 
 /* Button styling */
@@ -156,8 +262,26 @@ section:hover p {
     box-sizing: border-box;
 }
 
-/* Inputs for login */
-#username, #password {
+/* Updates */
+.updates-box {
+    background-color: #2a2a2a;
+    padding: 15px;
+    border-radius: 5px;
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 15px;
+}
+
+.updates-box p {
+    margin: 5px 0;
+}
+
+.updates-box small {
+    color: #888;
+    margin-left: 10px;
+}
+
+#update-input {
     display: block;
     width: 100%;
     max-width: 300px;
@@ -170,10 +294,63 @@ section:hover p {
     box-sizing: border-box;
 }
 
-#message {
+/* Hangouts */
+.hangouts-box {
+    background-color: #2a2a2a;
+    padding: 15px;
+    border-radius: 5px;
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 15px;
+}
+
+.hangouts-box p {
+    margin: 5px 0;
+}
+
+.hangouts-box small {
+    color: #888;
+    margin-left: 10px;
+}
+
+#hangout-date, #hangout-location, #hangout-activity {
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    margin: 10px auto;
+    padding: 10px;
+    background-color: #2a2a2a;
+    border: 1px solid #3a3a3a;
+    color: #e0e0e0;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* Inputs for login and profile */
+#username, #password, #new-password {
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    margin: 10px auto;
+    padding: 10px;
+    background-color: #2a2a2a;
+    border: 1px solid #3a3a3a;
+    color: #e0e0e0;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+#message, #profile-message {
     text-align: center;
     color: #00b4d8;
     margin-top: 10px;
+}
+
+#user-display, #last-seen-profile {
+    text-align: center;
+    color: #00b4d8;
+    font-size: 16px;
+    margin-bottom: 10px;
 }
 
 /* Footer */
@@ -203,6 +380,9 @@ footer:hover {
     }
     h2 {
         font-size: 22px;
+    }
+    h3 {
+        font-size: 18px;
     }
     p {
         font-size: 14px;

@@ -6,6 +6,7 @@
     <title>The Boys - Chat</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
     <header>
@@ -17,16 +18,21 @@
                 <li><a href="updates.html">Updates</a></li>
                 <li><a href="hangouts.html">Hangouts</a></li>
                 <li><a href="chat.html">Chat</a></li>
+                <li><a href="profile.html">Profile</a></li>
                 <li><a href="#" id="logout">Logout</a></li>
+                <li><button class="action-btn" id="theme-toggle">Toggle Theme</button></li>
             </ul>
         </nav>
     </header>
     <main>
         <section>
             <h2>Chat with The Boys</h2>
+            <div class="last-seen" id="last-seen"></div>
             <div class="chat-box" id="chat-box"></div>
-            <input type="text" id="chat-input" placeholder="Drop a message...">
+            <input type="text" id="chat-input" placeholder="Drop a message... (max 200 chars)">
             <button class="action-btn" id="send-btn">Send</button>
+            <button class="action-btn" id="refresh-chat-btn">Refresh Chat</button>
+            <button class="action-btn" id="clear-chat-btn">Clear Chat</button>
         </section>
     </main>
     <footer>
