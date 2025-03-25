@@ -1,13 +1,41 @@
-// Firebase setup
-const auth = firebase.auth();
-const db = firebase.firestore();
+// Initialize users in local storage if not already set
+if (!localStorage.getItem('users')) {
+    const users = {
+        lexzy: 'password1',
+        pely: 'password2',
+        icezee: 'password3',
+        praise: 'password4',
+        hatedvylan: 'password5'
+    };
+    localStorage.setItem('users', JSON.stringify(users));
+}
+
+// Initialize chat messages in local storage if not already set
+if (!localStorage.getItem('messages')) {
+    localStorage.setItem('messages', JSON.stringify([]));
+}
 
 // Check login state
-auth.onAuthStateChanged(user => {
-    if (!user && window.location.pathname !== '/index.html') {
-        window.location.href = 'index.html'; // Redirect to login if not logged in
+function checkLoginState() {
+    const loggedInUser = localStorage.getItem('loggedInUser');
+    if (!loggedInUser && window.location.pathname !== '/index.html') {
+        window.location.href = 'index.html';
     }
-});
+}
+checkLoginState();
+
+// Load chat messages
+function loadChat() {
+    const chatBox = document.getElementById('chat-box');
+    if (chatBox) {
+        const messages = JSON.parse(localStorage.getItem('messages')) || [];
+        chatBox.innerHTML = '';
+        messages.forEach(msg => {
+            chatBox.innerHTML += `<p><strong>${msg.user}:</strong> ${msg.text} <small>(${msg.timestamp})</small></p>`;
+        });
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+}
 
 // Grab buttons
 const buttons = document.querySelectorAll('.action-btn');
@@ -24,59 +52,60 @@ buttons.forEach(button => {
         else if (button.id === 'send-btn') {
             const input = document.getElementById('chat-input');
             if (input && input.value) {
-                const user = auth.currentUser;
-                db.collection('messages').add({
-                    user: user.email.split('@')[0], // Username from email
+                const user = localStorage.getItem('loggedInUser');
+                const messages = JSON.parse(localStorage.getItem('messages')) || [];
+                const timestamp = new Date().toLocaleTimeString();
+                messages.push({
+                    user: user,
                     text: input.value,
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                    timestamp: timestamp
                 });
+                localStorage.setItem('messages', JSON.stringify(messages));
                 input.value = '';
+                loadChat();
             }
         }
 
         // Login (index.html)
         else if (button.id === 'login-btn') {
-            const username = document.getElementById('username').value;
+            const username = document.getElementById('username').value.toLowerCase();
             const password = document.getElementById('password').value;
-            auth.signInWithEmailAndPassword(`${username}@theboys.com`, password)
-                .then(() => {
-                    document.getElementById('message').textContent = 'Logged in! Heading to The Boys...';
-                    setTimeout(() => { window.location.href = 'home.html'; }, 1000);
-                })
-                .catch(err => document.getElementById('message').textContent = err.message);
+            const users = JSON.parse(localStorage.getItem('users')) || {};
+            if (users[username] && users[username] === password) {
+                localStorage.setItem('loggedInUser', username);
+                document.getElementById('message').textContent = 'Logged in! Heading to The Boys...';
+                setTimeout(() => { window.location.href = 'home.html'; }, 1000);
+            } else {
+                document.getElementById('message').textContent = 'Invalid username or password.';
+            }
         }
+
+        // Sign Up (index.html)
         else if (button.id === 'signup-btn') {
-            const username = document.getElementById('username').value;
+            const username = document.getElementById('username').value.toLowerCase();
             const password = document.getElementById('password').value;
-            auth.createUserWithEmailAndPassword(`${username}@theboys.com`, password)
-                .then(() => {
-                    document.getElementById('message').textContent = 'Signed up! Now login.';
-                })
-                .catch(err => document.getElementById('message').textContent = err.message);
+            const users = JSON.parse(localStorage.getItem('users')) || {};
+            if (users[username]) {
+                document.getElementById('message').textContent = 'Username already exists.';
+            } else {
+                users[username] = password;
+                localStorage.setItem('users', JSON.stringify(users));
+                document.getElementById('message').textContent = 'Signed up! Now login.';
+            }
         }
     });
 });
 
-// Live chat updates with timestamps
+// Load chat on page load
 if (document.getElementById('chat-box')) {
-    db.collection('messages')
-        .orderBy('timestamp')
-        .onSnapshot(snapshot => {
-            const chatBox = document.getElementById('chat-box');
-            chatBox.innerHTML = '';
-            snapshot.forEach(doc => {
-                const msg = doc.data();
-                const time = msg.timestamp ? new Date(msg.timestamp.toDate()).toLocaleTimeString() : 'Just now';
-                chatBox.innerHTML += `<p><strong>${msg.user}:</strong> ${msg.text} <small>(${time})</small></p>`;
-            });
-            chatBox.scrollTop = chatBox.scrollHeight;
-        });
+    loadChat();
 }
 
 // Logout
 const logout = document.getElementById('logout');
 if (logout) {
     logout.addEventListener('click', () => {
-        auth.signOut().then(() => window.location.href = 'index.html');
+        localStorage.removeItem('loggedInUser');
+        window.location.href = 'index.html';
     });
 }

@@ -35,12 +35,12 @@ nav ul {
     padding: 10px 0;
     margin: 0;
     display: flex;
-    flex-wrap: wrap; /* Wraps nav items on small screens */
+    flex-wrap: wrap;
     justify-content: center;
 }
 
 nav ul li {
-    margin: 5px 15px; /* Reduced margin for mobile */
+    margin: 5px 15px;
 }
 
 nav ul li a {
@@ -61,9 +61,9 @@ nav ul li a:hover {
 /* Main - smooth and responsive */
 main {
     max-width: 900px;
-    width: 90%; /* Scales down on mobile */
+    width: 90%;
     margin: 30px auto 80px;
-    padding: 0 10px; /* Smaller padding on mobile */
+    padding: 0 10px;
 }
 
 section {
@@ -115,7 +115,7 @@ section:hover p {
     font-size: 16px;
     cursor: pointer;
     transition: all 0.3s ease;
-    margin: 5px 0; /* Space on mobile */
+    margin: 5px 0;
 }
 
 .action-btn:hover {
@@ -124,8 +124,8 @@ section:hover p {
     transform: scale(1.05);
 }
 
-/* Chat, hangout, and update lists */
-.chat-box, .hangout-list, .update-list {
+/* Chat */
+.chat-box {
     background-color: #2a2a2a;
     padding: 15px;
     border-radius: 5px;
@@ -134,32 +134,42 @@ section:hover p {
     margin-bottom: 15px;
 }
 
-.hangout-list, .update-list {
-    list-style: none;
-    padding: 0;
+.chat-box p {
+    margin: 5px 0;
 }
 
-.hangout-list li, .update-list li {
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
+.chat-box small {
+    color: #888;
+    margin-left: 10px;
 }
 
-/* Inputs and selects */
-#chat-input, #hangout-input, #username, #password, #chat-user {
+#chat-input {
     display: block;
-    width: 100%; /* Full width on mobile */
-    max-width: 300px; /* Cap for larger screens */
+    width: 100%;
+    max-width: 300px;
     margin: 10px auto;
     padding: 10px;
     background-color: #2a2a2a;
     border: 1px solid #3a3a3a;
     color: #e0e0e0;
     border-radius: 5px;
-    box-sizing: border-box; /* Includes padding in width */
+    box-sizing: border-box;
 }
 
-/* Login message */
+/* Inputs for login */
+#username, #password {
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    margin: 10px auto;
+    padding: 10px;
+    background-color: #2a2a2a;
+    border: 1px solid #3a3a3a;
+    color: #e0e0e0;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
 #message {
     text-align: center;
     color: #00b4d8;
@@ -183,22 +193,22 @@ footer:hover {
 /* Media query for mobile */
 @media (max-width: 600px) {
     header h1 {
-        font-size: 28px; /* Smaller title */
+        font-size: 28px;
     }
     nav ul li {
-        margin: 5px 10px; /* Tighter spacing */
+        margin: 5px 10px;
     }
     nav ul li a {
-        font-size: 16px; /* Smaller links */
+        font-size: 16px;
     }
     h2 {
-        font-size: 22px; /* Smaller headings */
+        font-size: 22px;
     }
     p {
-        font-size: 14px; /* Smaller text */
+        font-size: 14px;
     }
     .action-btn {
-        padding: 8px 15px; /* Smaller buttons */
+        padding: 8px 15px;
         font-size: 14px;
     }
 }
